@@ -8,4 +8,5 @@ whiskers/logs/*
 !whiskers/logs/index.html
 !whiskers/logs/.htaccess
 
-data/
+data/*
+!data/.htaccess
