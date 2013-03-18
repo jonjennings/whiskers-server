@@ -2,6 +2,25 @@
 
 /*
 |--------------------------------------------------------------------------
+| Whiskers specific config data
+|--------------------------------------------------------------------------
+*/
+
+/* If you change the database structure, you must:
+ *  - increment this value
+ *  - write code in the frontend controller to detect an obsolete database
+ *    version & redirect to the upgrade controller
+ *  - write code in the upgrade controller to upgrade the database to the
+ *    latest version (remember that the database might be MORE THAN ONE
+ *    version out of date
+ *  - write code in the install controller to create a fresh database with
+ *    the latest table definitions
+ */
+$config['latest_database_version']	= 2;
+
+
+/*
+|--------------------------------------------------------------------------
 | Base Site URL
 |--------------------------------------------------------------------------
 |
