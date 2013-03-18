@@ -74,7 +74,7 @@ jQuery(document).ready(function($) {
     // post to multiple services
     $('#post').bind('submit', function() {
         var endpoint = $(this).attr('data-endpoint'),
-            $drivers = $(this).find('#drivers .driver .driver-text');
+            $drivers = $(this).find('#drivers .driver .service-textarea');
 
         if ($drivers.length === 0) {
             return false;
