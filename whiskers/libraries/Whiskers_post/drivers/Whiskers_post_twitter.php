@@ -31,6 +31,22 @@ class Whiskers_post_twitter extends CI_Driver {
         $this->screen_name = $access_token->screen_name;
     }
 
+	/**
+	 * Make a post to the service
+	 * 
+	 * @param
+	 */
+	 
+    /**
+     * Make a post to the service
+     * 
+     * @param   string  $text     		text to be posted
+     * @param   string  $timestamp   	seconds since unic epoch
+     * @param   string  $parent_text   	text of the parent post
+     * @param   string  $key		 	seconds since Unix Epoch
+     * 
+     * @return  string					URL pointing to the posted text on the service
+     */	 
     public function save_post($text)
     {
         if (empty($text))
@@ -48,19 +64,21 @@ class Whiskers_post_twitter extends CI_Driver {
 
         $time = time();
 
+        $tweet = 'http://twitter.com/#!/'.$this->screen_name.'/status/'.$tweet;
+
         // Tweet has been posted, save to DB
-        $key = sha1($time.':'.$text);
+/*        $key = sha1($time.':'.$text);
 
         $saved = $this->CI->posts->update($key, array(
             'type' => 'post',
             'text' => $text,
             'time' => $time,
             'source_urls' => array(
-                'twitter' => 'http://twitter.com/#!/'.$this->screen_name.'/status/'.$tweet
+                'twitter' => $tweet
             )
         ));
-
-        return ( ! $saved) ? FALSE : $tweet;
+*/
+        return ($tweet);
     }
 
     public function remove_post($key)

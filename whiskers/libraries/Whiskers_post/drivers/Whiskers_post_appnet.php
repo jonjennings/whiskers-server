@@ -41,20 +41,23 @@ class Whiskers_post_appnet extends CI_Driver {
 		// Grab post ID from returned data
 		$id = $post->data->id;
 
-        $time = time();
+        $post = 'https://alpha.app.net/'.$this->nickname.'/post/'.$id;	// URL pointing to post on service's site
+
 
         // Update has been posted, save to DB
+/*        $time = time();
         $key = sha1($time.':'.$text);
+        
         $saved = $this->CI->posts->update($key, array(
             'type' => 'post',
             'text' => $text,
             'time' => $time,
             'source_urls' => array(
-                'appnet' => 'https://alpha.app.net/'.$this->nickname.'/post/'.$id		// URL pointing to post on service's site
+                'appnet' => $post
             ) 
         ));
-
-        return ( ! $saved) ? FALSE : $id;
+*/
+        return ($post);
     }
 
 

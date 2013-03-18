@@ -47,9 +47,11 @@ class Whiskers_post_facebook extends CI_Driver {
 
         $long_id = explode('_', $result['id']);
         $id = $long_id[1];
-        $time = time();
+
+		$post = $this->fb_settings->user->link.'/posts/'.$id;
 
         // Tweet has been posted, save to DB
+/*        $time = time();
         $key = sha1($time.':'.$text);
 
         $saved = $this->CI->posts->update($key, array(
@@ -57,11 +59,11 @@ class Whiskers_post_facebook extends CI_Driver {
             'text' => $text,
             'time' => $time,
             'source_urls' => array(
-                'facebook' => $this->fb_settings->user->link.'/posts/'.$id
+                'facebook' => $post
             )
         ));
-
-        return ( ! $saved) ? FALSE : $id;
+*/
+        return ($post);
     }
 
 }
