@@ -8,7 +8,7 @@ class Whiskers_Frontend extends CI_Controller {
     {
         parent::__construct();
 
-        // Dependecies
+        // Dependencies
         $this->load->helper('url');
         $this->load->helper('whiskers');
         $this->load->library('session');
@@ -17,21 +17,42 @@ class Whiskers_Frontend extends CI_Controller {
         // Check for DB
         $db_file = BASEPATH.'../data/whiskers.db';
 
+		// If no database file, then we're freshly installed
         if ( ! file_exists($db_file))
         {
             redirect('/install', 301);
         }
-
+		
         $this->load->database();
 
         $this->load->library('whiskers_db', array('settings'), 'settings');
         $this->load->library('whiskers_db', array('posts'), 'posts');
+        $this->load->library('whiskers_db', array('service_posts'), 'service_posts');
         $this->load->driver('whiskers_post');
 
         // setup template data
         $this->data['base_url'] = base_url();
         $this->data['title'] = 'Whiskers';
         $this->data['authenticated'] = false;
+
+		// Check database version
+		// Upgrade if necessary
+		if (null == $this->settings->get('database')->version) {
+
+			// database version is unspecified - that means
+			// version 1 (without authoritative posts)
+
+			// At time of writing, latest database version = 2 and has only
+			// just been introduced. Therefore only possible values
+			// are 2 (ie current) or null (ie previous version... an 
+			// implicit version 1)
+
+			// More extensive code will be required in the future when
+			// further database structure changes are made
+
+			$this->data['action_url'] = site_url('upgrade');
+            redirect('/upgrade', 301);
+		}
 
         // Check logged in status 
         if ( ! $var = $this->_logged_in())
