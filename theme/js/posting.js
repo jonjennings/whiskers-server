@@ -107,8 +107,8 @@ if ($drivers.length !== 0) {
                 	$this.addClass(textStatus);
                 	$this.closest('.field-shim').addClass(textStatus);
                 	//$this.closest('.field-shim').find('.edit-status:first').html(textStatus + '!');
-                	console.log(jqXHR);
-                	console.log(textStatus);
+                	//console.log(jqXHR);
+                	//console.log(textStatus);
                 },
                 dataType: 'json'
             });
