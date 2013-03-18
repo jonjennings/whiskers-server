@@ -57,8 +57,9 @@ class Whiskers_db {
         return TRUE;
     }
 
-    public function get($key = NULL) 
+    public function get($key = NULL, $return_multiple_rows = false) 
     {
+		// Get all rows
         if ($key == '*' OR $key == 'all' OR $key === NULL)
         {
             $sql = $this->db->prepare("SELECT * FROM {$this->table_name} ORDER BY created DESC");
@@ -75,7 +76,7 @@ class Whiskers_db {
             return $ret;
         }
         else
-        {
+        {	// get row(s) matching specific key
             $sql = $this->db->prepare("SELECT val FROM {$this->table_name} WHERE key = ?");
 
             if ( ! $sql) 
@@ -87,12 +88,21 @@ class Whiskers_db {
             $query = $sql->execute(array($key));
             $array = $sql->fetchAll();
 
+			// no matching rows
             if ( ! isset($array[0][0]))
             {
                 return FALSE;
             }
 
-            return json_decode($array[0][0]);
+			if ($return_multiple_rows) {
+				$array2 = array();
+				foreach ($array as $row) {
+					$array2[] = json_decode($row[0]);
+				}
+				return $array2;
+			} else {
+				return json_decode($array[0][0]);
+			}
         }
 
         return FALSE;
