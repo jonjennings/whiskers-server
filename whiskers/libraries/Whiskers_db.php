@@ -108,7 +108,7 @@ class Whiskers_db {
         return FALSE;
     }
 
-    public function update($key, $value)
+    public function update($key, $value, $allow_duplicate_keys = false)
     {
         $existing = $this->get($key);
 
@@ -118,19 +118,29 @@ class Whiskers_db {
             return $new_item;
         }
 
-        foreach ($existing->source_urls as $name => $url) 
-        {
-            $value['source_urls'][$name] = $url;
-        }
+		// Already have this key in the table
+		// If we're NOT allowed duplicates then merge the two sets of data
+		// before we add it
+		// (This code is obviously making MAJOR assumptions about how the
+		// data's structured... maybe not appropriate this low down the stack)
+		if (!$allow_duplicate_keys) {
 
-        if (is_array($value))
-        {
-            $value = array_merge($existing, $value);
-        }
+			foreach ($existing->source_urls as $name => $url) 
+			{
+				$value['source_urls'][$name] = $url;
+			}
+
+			if (is_array($value))
+			{
+				$value = array_merge((array)$existing, $value);
+			}
+		}
+		
+        $status = $this->set($key, $value);
+
+		file_put_contents(dirname(__FILE__) . '/db-update1.txt' , date("H:i:s")." set into table {$this->table_name} returned ".($status?"true":"false")."\r\n", FILE_APPEND);
         
-        $updated_item = $this->set($key, $value);
-        
-        return $updated_item;
+        return $status;
     }
 
     public function rm($key) 
