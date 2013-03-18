@@ -114,8 +114,16 @@ class Whiskers_Frontend extends CI_Controller {
 
     public function history()
     {
-        // $this->data['posts'] = $this->whiskers_post->get_posts();
+
+		// Get all the authoritative posts
         $this->data['posts'] = $this->posts->get();
+
+		// For each authoritative post, get all the matching service posts
+        foreach ($this->data['posts'] as $key => $val) {
+			$this->data['service_posts'][$key] = $this->service_posts->get($key, true);
+		}
+
+		// And display the history template
         $this->_parse_template('history'); 
     }
 
