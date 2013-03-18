@@ -137,8 +137,6 @@ class Whiskers_db {
 		}
 		
         $status = $this->set($key, $value);
-
-		file_put_contents(dirname(__FILE__) . '/db-update1.txt' , date("H:i:s")." set into table {$this->table_name} returned ".($status?"true":"false")."\r\n", FILE_APPEND);
         
         return $status;
     }
