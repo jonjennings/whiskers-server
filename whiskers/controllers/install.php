@@ -22,7 +22,7 @@ class Install extends CI_Controller {
 
     public function index()
     {
-        // Base URL is not properlly set
+        // Base URL is not properly set
         $base_uri = str_replace('install', '', $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
         $base_uri = (substr($base_uri, 0, 7) === 'http://') ? $base_uri : 'http://'.$base_uri;
         $this->data['base_url'] = $base_uri;
@@ -62,14 +62,14 @@ class Install extends CI_Controller {
         // check if table exists
         // if not, create
 
-        $create_posts = $this->db->simple_query("CREATE TABLE posts (
+        $db_status = $this->db->simple_query("CREATE TABLE posts (
             key VARCHAR(100) PRIMARY KEY, 
             val BLOB, 
             modified DATETIME DEFAULT CURRENT_TIMESTAMP,
             created TIMESTAMP(20)
         )");
 
-        if (FALSE !== $create_posts)
+        if (FALSE !== $db_status)
         {
             $this->data['lines'][] = "Created database table: \"posts\"";
         }
@@ -78,20 +78,50 @@ class Install extends CI_Controller {
             $this->data['lines'][] = "Database table \"posts\" already exists.";
         }
 
+        // create table service_posts
+		$db_status = $this->db->simple_query("CREATE TABLE service_posts (
+            key VARCHAR(100), 
+            val BLOB, 
+            modified DATETIME DEFAULT CURRENT_TIMESTAMP,
+            created TIMESTAMP(20),
+            FOREIGN KEY(key) REFERENCES posts(key) ON UPDATE CASCADE
+        )");
+        // Do we want ON UPDATE CASCADE??
+
+		if (FALSE != $db_status) {
+			$this->data['lines'][] = "Created database table \"Service posts\"";
+		} else {
+			$this->data['lines'][] = "Database table \"service posts\" already exists";
+		}
+
+
         // create settings table
-        $create_settings = $this->db->simple_query("CREATE TABLE settings (
+        $db_status = $this->db->simple_query("CREATE TABLE settings (
             key VARCHAR(100) PRIMARY KEY, 
             val BLOB, 
-            modified DATETIME DEFAULT CURRENT_TIMESTAMP
+            modified DATETIME DEFAULT CURRENT_TIMESTAMP,
+            created TIMESTAMP(20)
         )");
 
-        if (FALSE !== $create_settings)
+        if (FALSE !== $db_status)
         {
             $this->data['lines'][] = "Created database table: \"settings\"";
         }
         else
         {
             $this->data['lines'][] = "Database table \"settings\" already exists.";
+        }
+
+        // set database version
+        $db_status = $this->settings->set('database',array('version' => $this->config->item('latest_database_version')));
+
+        if (FALSE !== $db_status)
+        {
+            $this->data['lines'][] = "Set current database version: " . $this->config->item('latest_database_version');
+        }
+        else
+        {
+            $this->data['lines'][] = "Failed to set current database version";
         }
 
         $this->data['lines'][] = "Whiskers is installed.";
