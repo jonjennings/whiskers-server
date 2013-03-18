@@ -81,6 +81,13 @@ jQuery(document).ready(function($) {
         }
 
 if ($drivers.length !== 0) {
+	
+		// These values are used on the server so server knows
+		// each service-specific post comes from part of the same
+		// overall text. Stored in database & used to compute common key
+		timestamp = ((new Date().getTime())/1000) | 0;
+		parent_text = $(this).find('.all-drivers_text').val();
+	
         $drivers.each(function() {
             var $this = $(this),
                 $parent = $(this).parent('.driver'),
@@ -91,6 +98,8 @@ if ($drivers.length !== 0) {
                 type: 'POST',
                 url: endpoint,
                 data: { 
+					timestamp: timestamp,
+					parent_text: parent_text,
                     driver: driver, 
                     text: text 
                 },
@@ -99,6 +108,7 @@ if ($drivers.length !== 0) {
                 	$this.closest('.field-shim').addClass(textStatus);
                 	//$this.closest('.field-shim').find('.edit-status:first').html(textStatus + '!');
                 	console.log(jqXHR);
+                	console.log(textStatus);
                 },
                 dataType: 'json'
             });
