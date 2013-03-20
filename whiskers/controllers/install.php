@@ -84,9 +84,8 @@ class Install extends CI_Controller {
             val BLOB, 
             modified DATETIME DEFAULT CURRENT_TIMESTAMP,
             created TIMESTAMP(20),
-            FOREIGN KEY(key) REFERENCES posts(key) ON UPDATE CASCADE
+            FOREIGN KEY(key) REFERENCES posts(key) ON DELETE CASCADE
         )");
-        // Do we want ON UPDATE CASCADE??
 
 		if (FALSE != $db_status) {
 			$this->data['lines'][] = "Created database table \"Service posts\"";

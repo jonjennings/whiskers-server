@@ -63,7 +63,8 @@ class Upgrade extends CI_Controller {
             key VARCHAR(100), 
             val BLOB, 
             modified DATETIME DEFAULT CURRENT_TIMESTAMP,
-            created TIMESTAMP(20)
+            created TIMESTAMP(20),
+            FOREIGN KEY(key) REFERENCES posts(key) ON DELETE CASCADE
         )");
         
 		if ($db_status) {
