@@ -10,8 +10,8 @@
 		<li>Allow requests for permission for Developers.</li>
 		<li>Click "Create New App".</li>
 		<li>Fill in the Name field with something like "John's Whiskers", ignore the other fields.</li>
-		<li>Select 'Website' for how the app integrates with Facebook, and enter the Site URL for your Whiskers installation.</li>
-		<li>Get the App Key and Secret given by Facebook.</li>
+		<li>Select 'Website with Facebook Login' for how the app integrates with Facebook, and enter the Site URL for your Whiskers installation.</li>
+		<li>Get the App ID and Secret given by Facebook.</li>
 		<li>Fill in the details below and you should be good to go.</li>
 	</ul>
 	</div>

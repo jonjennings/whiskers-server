@@ -6,14 +6,15 @@
 
 	<ul>
 		<li>Go to <a target="_blank" href="http://dev.twitter.com">http://dev.twitter.com</a></li>
-		<li>In the bottom-right corner, click "Create an app".</li>
 		<li>Sign in with your Twitter account if you're not already</li>
-		<li>Fill in the Name field with something like "John's Whiskers", ignore the other fields.</li>
-		<li>Add a description ("Whiskers for Twitter") and website url (the current url if you'd like).</li>
+		<li>In the top-right corner, click on your account name and select "My Applications"</li>
+		<li>In the top-right, click "Create a new application"</li>
+		<li>Fill in the Name field with something like "John's Whiskers"</li>
+		<li>Add a description ("Whiskers for Twitter") and website url (the current url if you'd like)</li>
 		<li>Enter your callback url: <strong><?php print site_url('admin/twitter_callback'); ?></strong></li>
 		<li>Agree to the license, enter the captcha, and click "Create your Twitter application"</li>
-		<li>Click the "Settings" tab, change the Access to "Read and Write", and click "Update this Twitter applications settings"</li>
-		<li>Go back to the "Details" tab, and copy the "Consumer key" and "Consumer secret" to Whiskers. You should be good to go!</li>
+		<li>Click the "Settings" tab, change the Access to "Read and Write", and click "Update this Twitter application's settings"</li>
+		<li>Go back to the "Details" tab, and copy the "Consumer key" and "Consumer secret" to the fields below. You should be good to go!</li>
 	</ul>
 	</div>
 	
